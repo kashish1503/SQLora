@@ -1,0 +1,34 @@
+model_name: Qwen/Qwen2.5-0.5B-Instruct
+dtype: auto            # auto | float32 | bfloat16 | float16
+backend: scratch       # scratch (this repo's LoRALinear) | peft (Hugging Face reference)
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  use_rslora: false
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+data:
+  dataset: b-mc2/sql-create-context
+  split_seed: 42
+  test_samples: 1000   # held out for scripts/eval_sql.py, never trained on
+  eval_samples: 500    # eval loss during training
+  train_samples: 20000 # null = use everything (~77k)
+  max_length: 512
+
+train:
+  epochs: 1
+  batch_size: 8
+  grad_accum: 2
+  lr: 2.0e-4
+  lora_plus_ratio: 1.0 # >1 enables LoRA+ (B matrices get lr * ratio); try 16
+  weight_decay: 0.0
+  warmup_ratio: 0.03
+  max_grad_norm: 1.0
+  gradient_checkpointing: true
+  log_every: 10
+  eval_every: 200
+  seed: 42
+  output_dir: outputs/qwen05b-r16
+  wandb_project: null  # set to a name to log to Weights & Biases

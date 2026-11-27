@@ -1,0 +1,28 @@
+[project]
+name = "lora-sql"
+version = "0.1.0"
+description = "LoRA from scratch in PyTorch, verified against HF PEFT, applied to text-to-SQL"
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.3",
+  "transformers>=4.56",
+  "datasets>=2.20",
+  "safetensors",
+  "pyyaml",
+]
+
+[project.optional-dependencies]
+peft = ["peft>=0.13"]
+dev = ["pytest", "peft>=0.13"]
+track = ["wandb"]
+demo = ["gradio"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
