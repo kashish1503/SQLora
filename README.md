@@ -16,7 +16,7 @@ numerically**, then used to fine-tune a small LLM into a text-to-SQL model judge
 - Same config trains with either backend (`backend: scratch | peft`) for a head-to-head comparison.
 - Evaluation by **execution accuracy** on Spider (read-only SQLite, timeouts, order-aware row comparison).
 
-## How LoRA works (the 30-second version)
+## How LoRA works
 
 For a frozen weight `W ∈ R^{out×in}`, LoRA learns `ΔW = (α/r)·B·A` with
 `A ∈ R^{r×in}`, `B ∈ R^{out×r}`, `r ≪ min(in, out)`:
